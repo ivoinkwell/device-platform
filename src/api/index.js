@@ -1,9 +1,8 @@
 /**
  * API 统一出口
- * 页面只依赖这里暴露的方法，后端就绪后仅需修改 config.js 切换 mock/真实接口
+ * 页面只依赖这里暴露的方法，全部请求真实后端
  */
-import { USE_MOCK, BASE_URL } from './config'
-import { mockProjectList, mockProjectDetail, mockDeviceList, mockDeviceInfo } from './mock'
+import { BASE_URL } from './config'
 
 function request(url, data = {}) {
   return new Promise((resolve, reject) => {
@@ -25,16 +24,16 @@ function request(url, data = {}) {
 }
 
 // 首页：测试项目（测试名称）列表
-export const getProjectList = () => (USE_MOCK ? mockProjectList() : request('/api/projects'))
+export const getProjectList = () => request('/api/projects')
 
 // 详情页：测试项目详情（含各机型记录 + 实时引用机型参数）
-export const getProjectDetail = (id) => (USE_MOCK ? mockProjectDetail(id) : request(`/api/projects/${id}`))
+export const getProjectDetail = (id) => request(`/api/projects/${id}`)
 
 // 手机参数页：设备列表
-export const getDeviceList = () => (USE_MOCK ? mockDeviceList() : request('/api/devices'))
+export const getDeviceList = () => request('/api/devices')
 
 // 手机参数页：单台设备参数
-export const getDeviceInfo = (id) => (USE_MOCK ? mockDeviceInfo(id) : request(`/api/devices/${id}/info`))
+export const getDeviceInfo = (id) => request(`/api/devices/${id}/info`)
 
 // 图片地址解析：相对路径补后端地址（H5/小程序均需完整 URL）
 export const resolveImage = (url) => {
