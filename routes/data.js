@@ -25,8 +25,17 @@ router.get('/export', (req, res) => {
   const deviceIndexMap = new Map(devices.map((d, i) => [d.id, i]))
 
   const data = {
-    version: 2,
+    version: 3,
     exportedAt: new Date().toISOString(),
+    brands: db.prepare('SELECT name, image FROM brands ORDER BY name ASC').all().map((b) => {
+      const img = readImageBase64(b.image)
+      return {
+        name: b.name,
+        image: b.image || '',
+        imageBase64: img ? img.base64 : null,
+        imageExt: img ? img.ext : '',
+      }
+    }),
     devices: devices.map((d) => {
       const img = readImageBase64(d.image)
       return {
@@ -95,6 +104,24 @@ router.post('/import', upload.single('file'), (req, res) => {
     db.prepare('DELETE FROM device_items').run()
     db.prepare('DELETE FROM device_groups').run()
     db.prepare('DELETE FROM devices').run()
+    db.prepare('DELETE FROM brands').run()
+
+    const insBrand = db.prepare('INSERT INTO brands (name, image) VALUES (?, ?)')
+    ;(data.brands || []).forEach((b) => {
+      let image = b.image || ''
+      if (b.imageBase64) {
+        try {
+          fs.mkdirSync(uploadDir, { recursive: true })
+          const ext = (b.imageExt || path.extname(image) || '.jpg').toLowerCase()
+          const name = Date.now() + '-b' + '-' + Math.round(Math.random() * 1e6) + ext
+          fs.writeFileSync(path.join(uploadDir, name), Buffer.from(b.imageBase64, 'base64'))
+          image = '/uploads/' + name
+        } catch (e) {
+          image = ''
+        }
+      }
+      insBrand.run(b.name ?? '', image)
+    })
 
     const insDevice = db.prepare('INSERT INTO devices (brand, model, image, updated_at, sort) VALUES (?, ?, ?, ?, ?)')
     const insGroup = db.prepare('INSERT INTO device_groups (device_id, title, sort) VALUES (?, ?, ?)')
