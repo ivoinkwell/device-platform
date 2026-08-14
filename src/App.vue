@@ -30,6 +30,23 @@ page {
   border-bottom: 1px solid #262b36;
   background-color: #14161b;
 }
+/* #ifdef H5 */
+.a-header {
+  padding-top: calc(36rpx + env(safe-area-inset-top));
+}
+/* 手机端管理页：表格横向滚动、窄屏幕单列布局 */
+@media (max-width: 767px) {
+  .table {
+    overflow-x: auto;
+  }
+  .tr {
+    min-width: 760px;
+  }
+  .a-header {
+    flex-wrap: wrap;
+  }
+}
+/* #endif */
 .a-title {
   font-size: 40rpx;
   font-weight: 700;

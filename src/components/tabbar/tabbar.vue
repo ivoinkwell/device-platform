@@ -82,6 +82,11 @@ export default {
   display: none;
 }
 
+/* 品牌名：移动端底部导航不显示，仅桌面端顶部导航显示 */
+.tabbar-brand {
+  display: none;
+}
+
 .tabbar-item {
   flex: 1;
   display: flex;
@@ -148,7 +153,7 @@ export default {
     margin-right: auto;
   }
 
-  .tabbar-item {
+.tabbar-item {
     flex: 0 0 auto;
     flex-direction: row;
     height: 100%;

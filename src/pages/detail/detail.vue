@@ -149,6 +149,11 @@ export default {
 .status-bar {
   height: var(--status-bar-height);
 }
+/* #ifdef H5 */
+.status-bar {
+  height: env(safe-area-inset-top);
+}
+/* #endif */
 .header-bar {
   height: 96rpx;
   display: flex;
