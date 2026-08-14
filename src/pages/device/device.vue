@@ -355,37 +355,36 @@ export default {
   justify-content: space-between;
 }
 .brand-card {
-  width: 31%;
+  width: 48%;
   box-sizing: border-box;
   background-color: rgba(24, 27, 34, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
-  padding: 20rpx 12rpx;
+  padding: 28rpx 16rpx 26rpx;
   margin-bottom: 20rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 310rpx;
-  aspect-ratio: 1 / 1;
+  justify-content: flex-start;
+  min-height: 300rpx;
 }
 .brand-card-hover {
   background-color: rgba(31, 36, 46, 0.65);
 }
 .brand-avatar {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 36rpx;
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 32rpx;
   background-color: rgba(31, 36, 46, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  margin-bottom: 16rpx;
+  margin-bottom: 18rpx;
 }
 .brand-avatar-icon {
-  font-size: 96rpx;
+  font-size: 84rpx;
 }
 .brand-img {
   width: 100%;
@@ -396,9 +395,12 @@ export default {
   font-weight: 700;
   color: #e6e8ee;
   text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  word-break: break-all;
+  line-height: 1.3;
   max-width: 100%;
 }
 .brand-sub {
@@ -453,6 +455,7 @@ export default {
   font-size: 32rpx;
   font-weight: 700;
   color: #e6e8ee;
+  word-break: break-all;
 }
 .device-sub {
   font-size: 24rpx;
