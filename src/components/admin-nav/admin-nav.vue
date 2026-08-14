@@ -2,6 +2,7 @@
   <view class="admin-nav">
     <text class="nav-link" :class="{ 'nav-active': current === 'projects' }" @click="go('/pages/admin/projects/projects', 'projects')">测试数据管理</text>
     <text class="nav-link" :class="{ 'nav-active': current === 'device' }" @click="go('/pages/admin/devices/devices', 'device')">手机参数管理</text>
+    <text class="nav-link" :class="{ 'nav-active': current === 'brands' }" @click="go('/pages/admin/brands/brands', 'brands')">品牌 Logo</text>
     <text class="nav-link nav-util" @click="doExport">导出数据</text>
     <text class="nav-link nav-util" @click="doImport">导入数据</text>
     <text class="nav-user" v-if="username">👤 {{ username }}</text>

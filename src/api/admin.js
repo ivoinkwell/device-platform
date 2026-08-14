@@ -73,6 +73,10 @@ export const adminDeleteDevice = (id) => request('DELETE', `/api/devices/${id}`)
 export const adminGetDeviceInfo = (id) => request('GET', `/api/devices/${id}/info`)
 export const adminSaveDeviceInfo = (id, data) => request('PUT', `/api/devices/${id}/info`, data)
 
+// 品牌 Logo
+export const adminGetBrands = () => request('GET', '/api/brands')
+export const adminSaveBrandImage = (name, image) => request('PUT', '/api/brands/image', { name, image })
+
 // 上传缩略图（H5：uni.chooseImage 选中的临时路径）
 export const adminUploadImage = (filePath) =>
   new Promise((resolve, reject) => {

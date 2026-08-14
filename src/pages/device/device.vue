@@ -12,8 +12,8 @@
     </view>
 
     <view class="body">
-      <!-- 设备列表 -->
-      <template v-if="view === 'list'">
+      <!-- 品牌列表 -->
+      <template v-if="view === 'brands'">
         <view class="loading" v-if="loading">
           <view class="spinner"></view>
           <text class="loading-text">加载中...</text>
@@ -25,36 +25,65 @@
         </view>
 
         <template v-else>
-          <view class="list-tip">共 {{ list.length }} 台设备</view>
-          <view
-            class="device-card"
-            v-for="device in list"
-            :key="device.id"
-            hover-class="device-card-hover"
-            @click="openDevice(device)"
-          >
-            <view class="device-avatar" v-if="device.image && !device.imgFail">
-              <image class="device-img" :src="resolveImage(device.image)" mode="aspectFit" @error="device.imgFail = true"></image>
+          <view class="list-tip">共 {{ brandGroups.length }} 个品牌</view>
+          <view class="brand-grid">
+            <view
+              class="brand-card"
+              v-for="group in brandGroups"
+              :key="group.brand"
+              hover-class="brand-card-hover"
+              @click="openBrand(group)"
+            >
+              <view class="brand-avatar" v-if="group.logo && !group.imgFail">
+                <image class="brand-img" :src="resolveImage(group.logo)" mode="aspectFit" @error="group.imgFail = true"></image>
+              </view>
+              <view class="brand-avatar" v-else>
+                <text class="brand-avatar-icon">📱</text>
+              </view>
+              <text class="brand-name">{{ group.brand }}</text>
+              <text class="brand-sub">{{ group.devices.length }} 款机型</text>
             </view>
-            <view class="device-avatar" v-else>
-              <text class="device-avatar-icon">📱</text>
-            </view>
-            <view class="device-info">
-              <text class="device-name">{{ device.brand }} {{ device.model }}</text>
-              <text class="device-sub">{{ device.groupCount }} 组参数 · {{ device.itemCount }} 项</text>
-            </view>
-            <text class="card-arrow">›</text>
           </view>
-          <view class="empty" v-if="!list.length">
+          <view class="empty" v-if="!brandGroups.length">
             <text class="empty-text">暂无设备参数</text>
           </view>
         </template>
       </template>
 
+      <!-- 品牌下的机型列表 -->
+      <template v-else-if="view === 'devices'">
+        <view class="list-header">
+          <view class="back-btn" hover-class="back-btn-hover" @click="goBackBrands">
+            <text class="back-icon">‹</text>
+          </view>
+          <text class="list-title">{{ currentBrand }}</text>
+        </view>
+
+        <view
+          class="device-card"
+          v-for="device in brandDevices"
+          :key="device.id"
+          hover-class="device-card-hover"
+          @click="openDevice(device)"
+        >
+          <view class="device-avatar" v-if="device.image && !device.imgFail">
+            <image class="device-img" :src="resolveImage(device.image)" mode="aspectFit" @error="device.imgFail = true"></image>
+          </view>
+          <view class="device-avatar" v-else>
+            <text class="device-avatar-icon">📱</text>
+          </view>
+          <view class="device-info">
+            <text class="device-name">{{ device.brand }} {{ device.model }}</text>
+            <text class="device-sub">{{ device.groupCount }} 组参数 · {{ device.itemCount }} 项</text>
+          </view>
+          <text class="card-arrow">›</text>
+        </view>
+      </template>
+
       <!-- 设备参数详情 -->
       <template v-else-if="view === 'detail'">
         <view class="list-header">
-          <view class="back-btn" hover-class="back-btn-hover" @click="goBackList">
+          <view class="back-btn" hover-class="back-btn-hover" @click="goBackDevices">
             <text class="back-icon">‹</text>
           </view>
           <text class="list-title">{{ device ? device.brand + ' ' + device.model : '参数详情' }}</text>
@@ -106,18 +135,38 @@
 </template>
 
 <script>
-import { getDeviceList, getDeviceInfo, resolveImage } from '@/api'
+import { getDeviceList, getDeviceInfo, getBrands, resolveImage } from '@/api'
 
 export default {
   data() {
     return {
-      view: 'list',
+      view: 'brands',
       loading: true,
       errorMsg: '',
       list: [],
+      brandImages: {},
+      currentBrand: '',
       device: null,
       deviceId: '',
     }
+  },
+  computed: {
+    brandGroups() {
+      const map = {}
+      this.list.forEach((d) => {
+        if (!map[d.brand]) map[d.brand] = { brand: d.brand, devices: [] }
+        map[d.brand].devices.push(d)
+      })
+      return Object.keys(map).map((k) => ({
+        brand: k,
+        devices: map[k].devices,
+        logo: this.brandImages[k] || '',
+      }))
+    },
+    brandDevices() {
+      const group = this.brandGroups.find((g) => g.brand === this.currentBrand)
+      return group ? group.devices : []
+    },
   },
   onLoad() {
     this.loadList()
@@ -129,9 +178,14 @@ export default {
     loadList() {
       this.loading = true
       this.errorMsg = ''
-      getDeviceList()
-        .then((list) => {
+      Promise.all([getDeviceList(), getBrands()])
+        .then(([list, brands]) => {
           this.list = list
+          const map = {}
+          ;(brands || []).forEach((b) => {
+            map[b.name] = b.image || ''
+          })
+          this.brandImages = map
         })
         .catch((err) => {
           this.errorMsg = err.message || '加载失败'
@@ -139,6 +193,13 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    openBrand(group) {
+      this.currentBrand = group.brand
+      this.view = 'devices'
+    },
+    goBackBrands() {
+      this.view = 'brands'
     },
     openDevice(device) {
       this.view = 'detail'
@@ -157,19 +218,21 @@ export default {
           this.loading = false
         })
     },
-    resolveImage,
-    goBackList() {
-      this.view = 'list'
+    goBackDevices() {
       this.device = null
+      this.view = 'devices'
     },
     reload(done) {
-      if (this.view === 'list') {
+      if (this.view === 'brands') {
+        this.loadList()
+      } else if (this.view === 'devices') {
         this.loadList()
       } else if (this.deviceId) {
         this.openDevice({ id: this.deviceId })
       }
       if (typeof done === 'function') done()
     },
+    resolveImage,
   },
 }
 </script>
@@ -285,6 +348,68 @@ export default {
   margin-bottom: 16rpx;
 }
 
+/* 品牌卡片：上图标下文字 */
+.brand-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.brand-card {
+  width: 31%;
+  box-sizing: border-box;
+  background-color: #1a1d24;
+  border: 1px solid #262b36;
+  border-radius: 20rpx;
+  padding: 24rpx 12rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.brand-card-hover {
+  background-color: #1f242e;
+}
+.brand-avatar {
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 32rpx;
+  background-color: #1f242e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+.brand-avatar-icon {
+  font-size: 84rpx;
+}
+.brand-img {
+  width: 100%;
+  height: 100%;
+}
+.brand-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #e6e8ee;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.brand-sub {
+  font-size: 22rpx;
+  color: #8b91a0;
+  margin-top: 8rpx;
+  text-align: center;
+}
+.card-arrow {
+  font-size: 36rpx;
+  color: #4b5563;
+}
+
+/* 机型卡片 */
 .device-card {
   display: flex;
   align-items: center;
@@ -331,11 +456,8 @@ export default {
   color: #8b91a0;
   margin-top: 10rpx;
 }
-.card-arrow {
-  font-size: 36rpx;
-  color: #4b5563;
-}
 
+/* 返回头 */
 .list-header {
   display: flex;
   align-items: center;
@@ -371,6 +493,7 @@ export default {
   text-overflow: ellipsis;
 }
 
+/* 详情 */
 .hero-card {
   display: flex;
   align-items: center;
@@ -397,7 +520,7 @@ export default {
   height: 100%;
 }
 .hero-avatar-icon {
-  font-size: 56rpx;
+  font-size: 80rpx;
 }
 .hero-info {
   display: flex;
@@ -517,8 +640,24 @@ export default {
   .empty,
   .list-header,
   .hero-card,
-  .list-end {
+  .list-end,
+  .brand-grid {
     grid-column: 1 / -1;
+  }
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  .brand-card {
+    width: auto;
+    margin-bottom: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .brand-card:hover {
+    transform: translateY(-3px);
+    border-color: #3a4356;
   }
   .device-card {
     margin-bottom: 0;

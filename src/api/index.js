@@ -35,6 +35,9 @@ export const getDeviceList = () => request('/api/devices')
 // 手机参数页：单台设备参数
 export const getDeviceInfo = (id) => request(`/api/devices/${id}/info`)
 
+// 品牌 Logo 列表 [{name, image}]
+export const getBrands = () => request('/api/brands')
+
 // 图片地址解析：相对路径补后端地址（H5/小程序均需完整 URL）
 export const resolveImage = (url) => {
   if (!url) return ''

@@ -44,8 +44,14 @@
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}		,{
 			"path": "pages/admin/devices/devices",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			"path": "pages/admin/brands/brands",
 			"style": {
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white"
