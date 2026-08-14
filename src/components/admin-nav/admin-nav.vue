@@ -144,18 +144,18 @@ export default {
 }
 .nav-link {
   font-size: 28rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   padding: 10rpx 28rpx;
   border-radius: 999rpx;
   cursor: pointer;
   margin-right: 12rpx;
 }
 .nav-link:hover {
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
 }
 .nav-active {
-  color: #4c9aff;
-  background-color: #1f242e;
+  color: #5cb3ff;
+  background-color: rgba(31, 36, 46, 0.65);
   font-weight: 600;
 }
 .nav-util {

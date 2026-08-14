@@ -220,7 +220,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
 }
 .a-head-left {
   display: flex;
@@ -233,8 +233,8 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   font-size: 40rpx;
   color: #e6e8ee;
   margin-right: 20rpx;
@@ -244,7 +244,7 @@ export default {
   opacity: 0.8;
 }
 .ph {
-  color: #6b7280;
+  color: #7c8598;
 }
 .loading {
   display: flex;
@@ -256,7 +256,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -268,7 +268,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -284,15 +284,15 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
   cursor: pointer;
 }
 
 .record-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 24rpx;
@@ -302,7 +302,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 16rpx;
-  border-bottom: 1px solid #22262f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 12rpx;
 }
 .record-head-main {
@@ -319,7 +319,7 @@ export default {
 }
 .record-sub {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 6rpx;
 }
 .record-actions {
@@ -333,15 +333,15 @@ export default {
 .record-param {
   display: flex;
   align-items: baseline;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 12rpx;
   padding: 10rpx 20rpx;
   margin: 0 16rpx 16rpx 0;
 }
 .rp-label {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-right: 10rpx;
 }
 .rp-value {
@@ -351,7 +351,7 @@ export default {
 }
 .record-params-empty {
   font-size: 24rpx;
-  color: #6b7280;
+  color: #7c8598;
   padding: 12rpx 0;
 }
 .empty {
@@ -361,15 +361,15 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 
 .select-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #0f1115;
-  border: 1px solid #262b36;
+  background-color: rgba(15, 17, 21, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12rpx;
   padding: 16rpx 20rpx;
   cursor: pointer;
@@ -379,16 +379,16 @@ export default {
   color: #e6e8ee;
 }
 .picker-placeholder {
-  color: #6b7280;
+  color: #7c8598;
 }
 .picker-arrow {
   font-size: 28rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .dropdown {
   margin-top: 8rpx;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 12rpx;
   max-height: 360rpx;
   overflow-y: auto;
@@ -408,23 +408,23 @@ export default {
   background-color: #262b36;
 }
 .dropdown-active {
-  background-color: rgba(76, 154, 255, 0.12);
+  background-color: rgba(92, 179, 255, 0.12);
 }
 .dropdown-text {
   font-size: 28rpx;
   color: #e6e8ee;
 }
 .dropdown-active .dropdown-text {
-  color: #4c9aff;
+  color: #5cb3ff;
 }
 .dropdown-count {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .dropdown-empty {
   padding: 20rpx;
   font-size: 24rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 .param-form-head {
   display: flex;
@@ -434,7 +434,7 @@ export default {
 .preset-hint {
   display: block;
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-bottom: 16rpx;
 }
 .param-row {

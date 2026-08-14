@@ -132,15 +132,15 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
 }
 .a-head-left {
   display: flex;
   align-items: center;
 }
 .a-btn-ghost {
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   color: #c3c9d6;
   margin-right: 20rpx;
 }
@@ -157,7 +157,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -169,7 +169,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -185,14 +185,14 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
   cursor: pointer;
 }
 .tip {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-bottom: 28rpx;
 }
 
@@ -202,8 +202,8 @@ export default {
   gap: 24rpx;
 }
 .brand-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
   padding: 28rpx 20rpx 24rpx;
   display: flex;
@@ -214,8 +214,8 @@ export default {
   width: 150rpx;
   height: 150rpx;
   border-radius: 20rpx;
-  background-color: #0f1115;
-  border: 1px solid #262b36;
+  background-color: rgba(15, 17, 21, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -224,7 +224,7 @@ export default {
   transition: border-color 0.2s ease;
 }
 .brand-preview:hover {
-  border-color: #4c9aff;
+  border-color: #5cb3ff;
 }
 .brand-preview-empty {
   flex-direction: column;
@@ -236,12 +236,12 @@ export default {
 }
 .brand-fallback {
   font-size: 48rpx;
-  color: #6b7280;
+  color: #7c8598;
   line-height: 1;
 }
 .brand-fallback-tip {
   font-size: 22rpx;
-  color: #6b7280;
+  color: #7c8598;
   margin-top: 8rpx;
 }
 .brand-name {
@@ -256,7 +256,7 @@ export default {
 }
 .brand-count {
   font-size: 22rpx;
-  color: #6b7280;
+  color: #7c8598;
   margin-top: 8rpx;
 }
 .brand-actions {
@@ -265,7 +265,7 @@ export default {
 }
 .act-link {
   font-size: 24rpx;
-  color: #4c9aff;
+  color: #5cb3ff;
   cursor: pointer;
   padding: 4rpx 20rpx;
 }
@@ -284,6 +284,6 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 </style>

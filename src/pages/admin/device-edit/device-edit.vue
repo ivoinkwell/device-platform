@@ -236,7 +236,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
 }
 .a-head-left {
   display: flex;
@@ -249,8 +249,8 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   font-size: 40rpx;
   color: #e6e8ee;
   margin-right: 20rpx;
@@ -260,13 +260,13 @@ export default {
   opacity: 0.8;
 }
 .a-btn-ghost {
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   color: #c3c9d6;
   margin-right: 20rpx;
 }
 .ph {
-  color: #6b7280;
+  color: #7c8598;
 }
 .loading {
   display: flex;
@@ -278,7 +278,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -290,7 +290,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -306,15 +306,15 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
   cursor: pointer;
 }
 
 .group-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 28rpx;
@@ -323,8 +323,8 @@ export default {
 .image-card {
   display: flex;
   align-items: center;
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   margin-bottom: 28rpx;
@@ -333,7 +333,7 @@ export default {
   width: 160rpx;
   height: 160rpx;
   border-radius: 24rpx;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -360,7 +360,7 @@ export default {
 }
 .image-sub {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 8rpx;
 }
 .image-actions {
@@ -372,7 +372,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 16rpx;
-  border-bottom: 1px solid #22262f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 12rpx;
 }
 .group-title {
@@ -399,7 +399,7 @@ export default {
 .group-empty {
   padding: 16rpx 0;
   font-size: 24rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 
 .add-group {
@@ -407,7 +407,7 @@ export default {
   padding: 24rpx;
   border: 1px dashed #3a4356;
   border-radius: 16rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   font-size: 28rpx;
   cursor: pointer;
   margin-bottom: 28rpx;

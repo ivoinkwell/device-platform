@@ -72,7 +72,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,8 +82,8 @@ export default {
 .login-box {
   width: 100%;
   max-width: 480px;
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24rpx;
   padding: 56rpx 48rpx;
   display: flex;
@@ -102,7 +102,7 @@ export default {
 }
 .login-sub {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   text-align: center;
   margin: 10rpx 0 40rpx;
 }
@@ -113,25 +113,25 @@ export default {
 }
 .field-label {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-bottom: 10rpx;
 }
 .field-input {
-  background-color: #0f1115;
-  border: 1px solid #262b36;
+  background-color: rgba(15, 17, 21, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12rpx;
   padding: 18rpx 24rpx;
   font-size: 28rpx;
   color: #e6e8ee;
 }
 .ph {
-  color: #6b7280;
+  color: #7c8598;
 }
 .login-btn {
   text-align: center;
   padding: 20rpx 0;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 30rpx;
   font-weight: 600;
@@ -147,10 +147,10 @@ export default {
 }
 .foot-link {
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   cursor: pointer;
 }
 .foot-link:hover {
-  color: #4c9aff;
+  color: #5cb3ff;
 }
 </style>

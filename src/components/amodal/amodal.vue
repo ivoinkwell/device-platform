@@ -55,8 +55,8 @@ export default {
   width: 680rpx;
   max-width: 90vw;
   max-height: 84vh;
-  background-color: #1a1d24;
-  border: 1px solid #2c3342;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 20rpx;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ export default {
 }
 .amodal-close {
   font-size: 30rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   padding: 8rpx;
 }
 .amodal-body {
@@ -87,25 +87,25 @@ export default {
   display: flex;
   justify-content: flex-end;
   padding: 24rpx 32rpx;
-  border-top: 1px solid #262b36;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .btn {
   padding: 14rpx 44rpx;
   border-radius: 999rpx;
   font-size: 28rpx;
-  border: 1px solid #2c3342;
+  border: 1px solid rgba(92, 179, 255, 0.2);
 }
 .btn-hover {
   opacity: 0.8;
 }
 .btn-cancel {
   color: #c3c9d6;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   margin-right: 20rpx;
 }
 .btn-confirm {
   color: #ffffff;
-  background-color: #4c9aff;
-  border-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
+  border-color: #5cb3ff;
 }
 </style>

@@ -69,8 +69,8 @@ export default {
   right: 0;
   bottom: 0;
   display: flex;
-  background-color: #14161b;
-  border-top: 1px solid #262b36;
+  background-color: rgba(20, 22, 27, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35);
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
@@ -97,7 +97,7 @@ export default {
 }
 
 .tabbar-item-hover {
-  background-color: #1a1d24;
+  background-color: rgba(24, 27, 34, 0.78);
 }
 
 .tabbar-icon {
@@ -107,12 +107,12 @@ export default {
 
 .tabbar-text {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 8rpx;
 }
 
 .tabbar-text-active {
-  color: #4c9aff;
+  color: #5cb3ff;
 }
 
 /* 管理入口：仅桌面端 H5 显示 */
@@ -162,7 +162,7 @@ export default {
   }
 
   .tabbar-item-hover {
-    background-color: #1a1d24;
+    background-color: rgba(24, 27, 34, 0.78);
   }
 
   .tabbar-icon {

@@ -144,7 +144,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
 }
 .a-head-left {
   display: flex;
@@ -160,7 +160,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -172,7 +172,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -188,7 +188,7 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
   cursor: pointer;
@@ -197,7 +197,7 @@ export default {
   opacity: 0.8;
 }
 .ph {
-  color: #6b7280;
+  color: #7c8598;
 }
 .w-name {
   width: 26%;

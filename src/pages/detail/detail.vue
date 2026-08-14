@@ -135,7 +135,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
   box-sizing: border-box;
 }
 
@@ -143,7 +143,7 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #14161b;
+  background-color: rgba(20, 22, 27, 0.85);
   border-bottom: 1px solid #262b36;
 }
 .status-bar {
@@ -168,8 +168,8 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
 }
 .back-btn-hover {
   opacity: 0.7;
@@ -208,7 +208,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -220,7 +220,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -236,7 +236,7 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
 }
@@ -245,8 +245,8 @@ export default {
 }
 
 .hero-card {
-  background: linear-gradient(135deg, #1c2333, #1a1d24);
-  border: 1px solid #2c3342;
+  background: linear-gradient(135deg, rgba(47, 139, 255, 0.3), rgba(26, 29, 36, 0.55));
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 20rpx;
   padding: 36rpx 32rpx;
   margin-bottom: 24rpx;
@@ -260,19 +260,19 @@ export default {
 }
 .hero-remark {
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 12rpx;
 }
 .hero-time {
   font-size: 22rpx;
-  color: #6b7280;
+  color: #7c8598;
   margin-top: 12rpx;
 }
 
 /* 机型记录卡片 */
 .record-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
   padding: 24rpx 28rpx 8rpx;
   margin-bottom: 24rpx;
@@ -281,14 +281,14 @@ export default {
   display: flex;
   align-items: center;
   padding-bottom: 16rpx;
-  border-bottom: 1px solid #22262f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 8rpx;
 }
 .record-thumb {
   width: 180rpx;
   height: 180rpx;
   border-radius: 28rpx;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,7 +314,7 @@ export default {
 }
 .record-time {
   font-size: 20rpx;
-  color: #6b7280;
+  color: #7c8598;
   margin-top: 6rpx;
 }
 
@@ -330,11 +330,11 @@ export default {
   width: 10rpx;
   height: 10rpx;
   border-radius: 50%;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   margin-right: 10rpx;
 }
 .result-dot {
-  background-color: #22c55e;
+  background-color: #34d399;
 }
 .sub-text {
   font-size: 26rpx;
@@ -343,13 +343,13 @@ export default {
 }
 .sub-count {
   font-size: 22rpx;
-  color: #6b7280;
+  color: #7c8598;
   margin-left: auto;
 }
 
 .param-group {
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 16rpx;
   padding: 4rpx 24rpx;
   margin-bottom: 16rpx;
@@ -361,12 +361,12 @@ export default {
 .param-group-title {
   font-size: 26rpx;
   font-weight: 600;
-  color: #4c9aff;
+  color: #5cb3ff;
 }
 
 .params-card {
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 16rpx;
   padding: 4rpx 24rpx;
 }
@@ -382,7 +382,7 @@ export default {
 }
 .info-label {
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-right: 24rpx;
   flex-shrink: 0;
 }
@@ -396,7 +396,7 @@ export default {
 .params-empty {
   padding: 28rpx 0;
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
   text-align: center;
 }
 
@@ -407,7 +407,7 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 .list-end {
   text-align: center;

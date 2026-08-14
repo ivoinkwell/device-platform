@@ -98,7 +98,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
   box-sizing: border-box;
 }
 
@@ -106,7 +106,7 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #14161b;
+  background-color: rgba(20, 22, 27, 0.85);
   border-bottom: 1px solid #262b36;
 }
 .status-bar {
@@ -134,15 +134,15 @@ export default {
   align-items: center;
   padding: 10rpx 24rpx;
   border-radius: 999rpx;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
 }
 .refresh-btn-hover {
   opacity: 0.7;
 }
 .refresh-icon {
   font-size: 28rpx;
-  color: #4c9aff;
+  color: #5cb3ff;
   margin-right: 8rpx;
 }
 .refresh-text {
@@ -164,7 +164,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -176,7 +176,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -192,7 +192,7 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
 }
@@ -202,19 +202,19 @@ export default {
 
 .list-tip {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-bottom: 16rpx;
 }
 
 .project-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
-  border-radius: 20rpx;
-  padding: 28rpx;
-  margin-bottom: 20rpx;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24rpx;
+  padding: 40rpx 36rpx;
+  margin-bottom: 24rpx;
 }
 .project-card-hover {
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
 }
 .card-head {
   display: flex;
@@ -222,40 +222,40 @@ export default {
   justify-content: space-between;
 }
 .project-name {
-  font-size: 32rpx;
+  font-size: 36rpx;
   font-weight: 700;
   color: #e6e8ee;
   flex: 1;
   margin-right: 16rpx;
 }
 .param-count {
-  font-size: 22rpx;
-  color: #4c9aff;
-  background-color: rgba(76, 154, 255, 0.12);
-  border: 1px solid rgba(76, 154, 255, 0.35);
+  font-size: 24rpx;
+  color: #5cb3ff;
+  background-color: rgba(92, 179, 255, 0.12);
+  border: 1px solid rgba(92, 179, 255, 0.35);
   border-radius: 999rpx;
-  padding: 6rpx 18rpx;
+  padding: 8rpx 22rpx;
 }
 .project-remark {
   display: block;
-  font-size: 24rpx;
-  color: #8b91a0;
-  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #9aa3b2;
+  margin-top: 16rpx;
 }
 .card-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #22262f;
-  padding-top: 16rpx;
-  margin-top: 16rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20rpx;
+  margin-top: 20rpx;
 }
 .project-time {
-  font-size: 22rpx;
-  color: #6b7280;
+  font-size: 24rpx;
+  color: #7c8598;
 }
 .card-arrow {
-  font-size: 36rpx;
+  font-size: 44rpx;
   color: #4b5563;
 }
 
@@ -266,7 +266,7 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 .list-end {
   text-align: center;

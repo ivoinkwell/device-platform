@@ -240,7 +240,7 @@ export default {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #0f1115;
+  background-color: transparent;
   box-sizing: border-box;
 }
 
@@ -248,7 +248,7 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #14161b;
+  background-color: rgba(20, 22, 27, 0.85);
   border-bottom: 1px solid #262b36;
 }
 .status-bar {
@@ -276,15 +276,15 @@ export default {
   align-items: center;
   padding: 10rpx 24rpx;
   border-radius: 999rpx;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
 }
 .refresh-btn-hover {
   opacity: 0.7;
 }
 .refresh-icon {
   font-size: 28rpx;
-  color: #4c9aff;
+  color: #5cb3ff;
   margin-right: 8rpx;
 }
 .refresh-text {
@@ -306,7 +306,7 @@ export default {
   width: 56rpx;
   height: 56rpx;
   border: 6rpx solid #262b36;
-  border-top-color: #4c9aff;
+  border-top-color: #5cb3ff;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -318,7 +318,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .error {
   display: flex;
@@ -334,7 +334,7 @@ export default {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   color: #ffffff;
   font-size: 28rpx;
 }
@@ -344,7 +344,7 @@ export default {
 
 .list-tip {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-bottom: 16rpx;
 }
 
@@ -357,8 +357,8 @@ export default {
 .brand-card {
   width: 31%;
   box-sizing: border-box;
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
   padding: 20rpx 12rpx;
   margin-bottom: 20rpx;
@@ -370,13 +370,13 @@ export default {
   aspect-ratio: 1 / 1;
 }
 .brand-card-hover {
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
 }
 .brand-avatar {
   width: 200rpx;
   height: 200rpx;
   border-radius: 36rpx;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -403,7 +403,7 @@ export default {
 }
 .brand-sub {
   font-size: 22rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 8rpx;
   text-align: center;
 }
@@ -416,20 +416,20 @@ export default {
 .device-card {
   display: flex;
   align-items: center;
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
   padding: 28rpx;
   margin-bottom: 20rpx;
 }
 .device-card-hover {
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
 }
 .device-avatar {
   width: 180rpx;
   height: 180rpx;
   border-radius: 28rpx;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -456,7 +456,7 @@ export default {
 }
 .device-sub {
   font-size: 24rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-top: 10rpx;
 }
 
@@ -473,8 +473,8 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #1f242e;
-  border: 1px solid #2c3342;
+  background-color: rgba(31, 36, 46, 0.65);
+  border: 1px solid rgba(92, 179, 255, 0.2);
   margin-right: 16rpx;
 }
 .back-btn-hover {
@@ -500,8 +500,8 @@ export default {
 .hero-card {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #1c2333, #1a1d24);
-  border: 1px solid #2c3342;
+  background: linear-gradient(135deg, rgba(47, 139, 255, 0.3), rgba(26, 29, 36, 0.55));
+  border: 1px solid rgba(92, 179, 255, 0.2);
   border-radius: 20rpx;
   padding: 32rpx 28rpx;
   margin-bottom: 24rpx;
@@ -510,7 +510,7 @@ export default {
   width: 160rpx;
   height: 160rpx;
   border-radius: 32rpx;
-  background-color: #1f242e;
+  background-color: rgba(31, 36, 46, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -532,7 +532,7 @@ export default {
 }
 .hero-brand {
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
 }
 .hero-name {
   font-size: 38rpx;
@@ -542,12 +542,12 @@ export default {
 }
 .hero-time {
   font-size: 22rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 
 .group-card {
-  background-color: #1a1d24;
-  border: 1px solid #262b36;
+  background-color: rgba(24, 27, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20rpx;
   padding: 8rpx 28rpx;
   margin-bottom: 24rpx;
@@ -556,13 +556,13 @@ export default {
   display: flex;
   align-items: center;
   padding: 20rpx 0 12rpx;
-  border-bottom: 1px solid #22262f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .group-dot {
   width: 12rpx;
   height: 12rpx;
   border-radius: 50%;
-  background-color: #4c9aff;
+  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
   margin-right: 12rpx;
 }
 .group-title {
@@ -575,14 +575,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 22rpx 0;
-  border-bottom: 1px solid #22262f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .info-row:last-child {
   border-bottom: none;
 }
 .info-label {
   font-size: 26rpx;
-  color: #8b91a0;
+  color: #9aa3b2;
   margin-right: 24rpx;
   flex-shrink: 0;
 }
@@ -600,7 +600,7 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #6b7280;
+  color: #7c8598;
 }
 .list-end {
   text-align: center;
