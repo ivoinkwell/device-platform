@@ -348,7 +348,7 @@ export default {
   margin-bottom: 16rpx;
 }
 
-/* 品牌卡片：上图标下文字 */
+/* 品牌卡片：正方形，上图标下文字 */
 .brand-grid {
   display: flex;
   flex-wrap: wrap;
@@ -360,19 +360,22 @@ export default {
   background-color: #1a1d24;
   border: 1px solid #262b36;
   border-radius: 20rpx;
-  padding: 24rpx 12rpx;
+  padding: 20rpx 12rpx;
   margin-bottom: 20rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 310rpx;
+  aspect-ratio: 1 / 1;
 }
 .brand-card-hover {
   background-color: #1f242e;
 }
 .brand-avatar {
-  width: 170rpx;
-  height: 170rpx;
-  border-radius: 32rpx;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 36rpx;
   background-color: #1f242e;
   display: flex;
   align-items: center;
@@ -382,7 +385,7 @@ export default {
   margin-bottom: 16rpx;
 }
 .brand-avatar-icon {
-  font-size: 84rpx;
+  font-size: 96rpx;
 }
 .brand-img {
   width: 100%;
@@ -651,6 +654,7 @@ export default {
   }
   .brand-card {
     width: auto;
+    height: auto;
     margin-bottom: 0;
     cursor: pointer;
     transition: transform 0.2s ease, border-color 0.2s ease;

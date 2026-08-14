@@ -22,19 +22,21 @@
       </view>
 
       <template v-else>
-        <view class="tip">品牌来自手机参数管理中的设备自动汇总，Logo 单独上传（用于前台品牌列表展示）</view>
+        <view class="tip">品牌自动汇总自手机参数管理；上传的 Logo 展示在前台品牌列表</view>
         <view class="brand-grid">
           <view class="brand-card" v-for="brand in brands" :key="brand.name">
-            <view class="brand-preview" v-if="brand.image && !brand.imgFail">
+            <view class="brand-preview" v-if="brand.image && !brand.imgFail" @click="upload(brand)">
               <image class="brand-img" :src="resolveImage(brand.image)" mode="aspectFit" @error="brand.imgFail = true"></image>
             </view>
-            <view class="brand-preview" v-else>
-              <text class="brand-fallback">📱</text>
+            <view class="brand-preview brand-preview-empty" v-else @click="upload(brand)">
+              <text class="brand-fallback">＋</text>
+              <text class="brand-fallback-tip">上传</text>
             </view>
             <text class="brand-name">{{ brand.name }}</text>
+            <text class="brand-count">{{ brand.count }} 款机型</text>
             <view class="brand-actions">
-              <view class="a-btn a-btn-ghost" hover-class="btn-hover" @click="upload(brand)">上传</view>
-              <view class="a-btn a-btn-ghost" hover-class="btn-hover" v-if="brand.image" @click="removeImage(brand)">移除</view>
+              <text class="act-link" @click="upload(brand)">{{ brand.image ? '更换' : '上传' }}</text>
+              <text class="act-link act-danger" v-if="brand.image" @click="removeImage(brand)">移除</text>
             </view>
           </view>
           <view class="empty" v-if="!brands.length">
@@ -72,12 +74,13 @@ export default {
           ;(brandImages || []).forEach((b) => {
             map[b.name] = b.image || ''
           })
-          const names = []
+          const counts = {}
           devices.forEach((d) => {
-            if (names.indexOf(d.brand) === -1) names.push(d.brand)
+            counts[d.brand] = (counts[d.brand] || 0) + 1
+            if (!(d.brand in map) && map[d.brand] === undefined) map[d.brand] = ''
           })
-          names.sort()
-          this.brands = names.map((n) => ({ name: n, image: map[n] || '', imgFail: false }))
+          const names = Object.keys(counts).sort()
+          this.brands = names.map((n) => ({ name: n, count: counts[n], image: map[n] || '', imgFail: false }))
         })
         .catch((err) => {
           this.errorMsg = err.message || '加载失败'
@@ -190,53 +193,92 @@ export default {
 .tip {
   font-size: 24rpx;
   color: #8b91a0;
-  margin-bottom: 24rpx;
+  margin-bottom: 28rpx;
 }
+
 .brand-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220rpx, 1fr));
+  gap: 24rpx;
 }
 .brand-card {
-  width: 220rpx;
-  box-sizing: border-box;
   background-color: #1a1d24;
   border: 1px solid #262b36;
-  border-radius: 16rpx;
-  padding: 24rpx;
-  margin: 0 20rpx 20rpx 0;
+  border-radius: 20rpx;
+  padding: 28rpx 20rpx 24rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .brand-preview {
-  width: 140rpx;
-  height: 140rpx;
+  width: 150rpx;
+  height: 150rpx;
   border-radius: 20rpx;
-  background-color: #1f242e;
+  background-color: #0f1115;
+  border: 1px solid #262b36;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-bottom: 16rpx;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.brand-preview:hover {
+  border-color: #4c9aff;
+}
+.brand-preview-empty {
+  flex-direction: column;
+  border-style: dashed;
 }
 .brand-img {
   width: 100%;
   height: 100%;
 }
 .brand-fallback {
-  font-size: 64rpx;
+  font-size: 48rpx;
+  color: #6b7280;
+  line-height: 1;
+}
+.brand-fallback-tip {
+  font-size: 22rpx;
+  color: #6b7280;
+  margin-top: 8rpx;
 }
 .brand-name {
   font-size: 28rpx;
   font-weight: 600;
   color: #e6e8ee;
-  margin-bottom: 16rpx;
+  margin-top: 20rpx;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.brand-count {
+  font-size: 22rpx;
+  color: #6b7280;
+  margin-top: 8rpx;
 }
 .brand-actions {
   display: flex;
+  margin-top: 18rpx;
 }
+.act-link {
+  font-size: 24rpx;
+  color: #4c9aff;
+  cursor: pointer;
+  padding: 4rpx 20rpx;
+}
+.act-link:hover {
+  text-decoration: underline;
+}
+.act-danger {
+  color: #ef4444;
+  border-left: 1px solid #2c3342;
+}
+
 .empty {
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: center;
   padding: 100rpx 0;
 }
