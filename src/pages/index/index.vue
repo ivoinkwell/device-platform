@@ -3,12 +3,21 @@
     <view class="header">
       <view class="status-bar"></view>
       <view class="header-bar">
-        <text class="header-title">测试数据</text>
+        <view class="header-brand">
+          <view class="brand-mark">
+            <view class="brand-mark-core"></view>
+          </view>
+          <view class="header-titles">
+            <text class="header-title">测试数据</text>
+            <text class="header-sub">TEST PROJECTS</text>
+          </view>
+        </view>
         <view class="refresh-btn" hover-class="refresh-btn-hover" @click="loadData">
           <text class="refresh-icon">⟳</text>
           <text class="refresh-text">刷新</text>
         </view>
       </view>
+      <view class="header-line"></view>
     </view>
 
     <view class="body">
@@ -26,8 +35,8 @@
         <view class="list-tip">共 {{ list.length }} 个测试项目</view>
 
         <view
-          class="project-card"
-          v-for="project in list"
+          class="project-card tech-card"
+          v-for="(project, i) in list"
           :key="project.id"
           hover-class="project-card-hover"
           @click="goDetail(project)"
@@ -38,8 +47,13 @@
           </view>
           <text class="project-remark" v-if="project.remark">{{ project.remark }}</text>
           <view class="card-foot">
-            <text class="project-time">录入于 {{ project.createdAt }}</text>
-            <text class="card-arrow">›</text>
+            <text class="project-time">
+              <text class="card-code">PRJ-{{ cardCode(i) }}</text> · 录入于 {{ project.createdAt }}
+            </text>
+            <view class="card-go">
+              <text class="card-go-text">查看详情</text>
+              <text class="card-arrow">›</text>
+            </view>
           </view>
         </view>
 
@@ -91,6 +105,9 @@ export default {
     goDetail(project) {
       uni.navigateTo({ url: '/pages/detail/detail?id=' + project.id })
     },
+    cardCode(i) {
+      return ('0' + (i + 1)).slice(-2)
+    },
   },
 }
 </script>
@@ -102,12 +119,22 @@ export default {
   box-sizing: border-box;
 }
 
+/* ---------- 头部 ---------- */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(20, 22, 27, 0.85);
-  border-bottom: 1px solid #262b36;
+  background-color: rgba(10, 14, 22, 0.82);
+  border-bottom: 1px solid var(--line);
+}
+.header-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1rpx;
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(77, 166, 255, 0.4), transparent);
+  pointer-events: none;
 }
 .status-bar {
   height: var(--status-bar-height);
@@ -124,36 +151,71 @@ export default {
   justify-content: space-between;
   padding: 0 24rpx;
 }
+.header-brand {
+  display: flex;
+  align-items: center;
+}
+.brand-mark {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18rpx;
+  background: linear-gradient(135deg, rgba(77, 166, 255, 0.2), rgba(53, 201, 238, 0.06));
+  border: 1px solid rgba(77, 166, 255, 0.38);
+  box-shadow: 0 0 14px rgba(77, 166, 255, 0.18);
+}
+.brand-mark-core {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(53, 201, 238, 0.9);
+}
+.header-titles {
+  display: flex;
+  flex-direction: column;
+}
 .header-title {
   font-size: 36rpx;
   font-weight: 600;
-  color: #e6e8ee;
+  color: var(--text-1);
+  line-height: 1.15;
+}
+.header-sub {
+  font-size: 18rpx;
+  letter-spacing: 3rpx;
+  color: var(--text-3);
+  margin-top: 2rpx;
 }
 .refresh-btn {
   display: flex;
   align-items: center;
   padding: 10rpx 24rpx;
   border-radius: 999rpx;
-  background-color: rgba(31, 36, 46, 0.65);
-  border: 1px solid rgba(92, 179, 255, 0.2);
+  background-color: rgba(18, 26, 42, 0.7);
+  border: 1px solid rgba(77, 166, 255, 0.28);
 }
 .refresh-btn-hover {
   opacity: 0.7;
 }
 .refresh-icon {
   font-size: 28rpx;
-  color: #5cb3ff;
+  color: var(--accent);
   margin-right: 8rpx;
 }
 .refresh-text {
   font-size: 26rpx;
-  color: #c3c9d6;
+  color: var(--text-2);
 }
 
 .body {
   padding: 24rpx 24rpx 200rpx;
 }
 
+/* ---------- 加载 / 错误 ---------- */
 .loading {
   display: flex;
   flex-direction: column;
@@ -163,10 +225,11 @@ export default {
 .spinner {
   width: 56rpx;
   height: 56rpx;
-  border: 6rpx solid #262b36;
-  border-top-color: #5cb3ff;
+  border: 6rpx solid rgba(122, 162, 220, 0.14);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
+  box-shadow: 0 0 18px rgba(77, 166, 255, 0.18);
 }
 @keyframes spin {
   to {
@@ -176,7 +239,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
 }
 .error {
   display: flex;
@@ -186,35 +249,46 @@ export default {
 }
 .error-text {
   font-size: 28rpx;
-  color: #ef4444;
+  color: #f48a8a;
 }
 .retry-btn {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
+  background: linear-gradient(135deg, #2f7bff, #35c9ee);
   color: #ffffff;
   font-size: 28rpx;
+  box-shadow: 0 0 20px rgba(53, 150, 255, 0.3);
 }
 .retry-btn-hover {
   opacity: 0.8;
 }
 
+/* ---------- 列表 ---------- */
 .list-tip {
+  display: flex;
+  align-items: center;
   font-size: 24rpx;
-  color: #9aa3b2;
-  margin-bottom: 16rpx;
+  color: var(--text-2);
+  letter-spacing: 2rpx;
+  margin-bottom: 20rpx;
+}
+.list-tip::before {
+  content: '';
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 2rpx;
+  background-color: var(--accent);
+  box-shadow: 0 0 8px rgba(77, 166, 255, 0.8);
+  margin-right: 12rpx;
 }
 
 .project-card {
-  background-color: rgba(24, 27, 34, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24rpx;
-  padding: 40rpx 36rpx;
+  padding: 36rpx 32rpx;
   margin-bottom: 24rpx;
 }
 .project-card-hover {
-  background-color: rgba(31, 36, 46, 0.65);
+  opacity: 0.92;
 }
 .card-head {
   display: flex;
@@ -224,39 +298,58 @@ export default {
 .project-name {
   font-size: 36rpx;
   font-weight: 700;
-  color: #e6e8ee;
+  color: var(--text-1);
   flex: 1;
   margin-right: 16rpx;
 }
 .param-count {
-  font-size: 24rpx;
-  color: #5cb3ff;
-  background-color: rgba(92, 179, 255, 0.12);
-  border: 1px solid rgba(92, 179, 255, 0.35);
+  font-size: 22rpx;
+  color: var(--accent);
+  background-color: rgba(77, 166, 255, 0.08);
+  border: 1px solid rgba(77, 166, 255, 0.3);
   border-radius: 999rpx;
-  padding: 8rpx 22rpx;
+  padding: 6rpx 18rpx;
+  letter-spacing: 1rpx;
+  flex-shrink: 0;
 }
 .project-remark {
   display: block;
   font-size: 26rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
   margin-top: 16rpx;
+  line-height: 1.5;
 }
 .card-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--line);
   padding-top: 20rpx;
   margin-top: 20rpx;
 }
 .project-time {
-  font-size: 24rpx;
-  color: #7c8598;
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+.card-code {
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, 'Courier New', monospace;
+  color: var(--accent);
+  letter-spacing: 1rpx;
+}
+.card-go {
+  display: flex;
+  align-items: center;
+}
+.card-go-text {
+  font-size: 22rpx;
+  color: var(--text-2);
+  margin-right: 6rpx;
 }
 .card-arrow {
-  font-size: 44rpx;
-  color: #4b5563;
+  font-size: 36rpx;
+  color: var(--accent);
+  line-height: 1;
+  margin-top: -4rpx;
 }
 
 .empty {
@@ -266,12 +359,12 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #7c8598;
+  color: var(--text-3);
 }
 .list-end {
   text-align: center;
   font-size: 22rpx;
-  color: #4b5563;
+  color: var(--text-3);
   padding: 24rpx 0;
 }
 
@@ -286,6 +379,9 @@ export default {
     background-color: transparent;
     border-bottom: none;
   }
+  .header-line {
+    display: none;
+  }
   .header-bar {
     max-width: 1200px;
     margin: 0 auto;
@@ -293,6 +389,9 @@ export default {
   }
   .header-title {
     font-size: 30px;
+  }
+  .header-sub {
+    font-size: 11px;
   }
   .body {
     max-width: 1200px;
@@ -312,13 +411,6 @@ export default {
   }
   .project-card {
     margin-bottom: 0;
-    cursor: pointer;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .project-card:hover {
-    transform: translateY(-3px);
-    border-color: #3a4356;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
   }
 }
 @media (min-width: 1100px) {

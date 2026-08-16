@@ -9,6 +9,7 @@
         <text class="header-title">{{ project ? project.name : '项目详情' }}</text>
         <view class="header-placeholder"></view>
       </view>
+      <view class="header-line"></view>
     </view>
 
     <view class="body">
@@ -24,12 +25,20 @@
 
       <template v-else-if="project">
         <view class="hero-card">
+          <view class="scanline"></view>
+          <view class="hero-top">
+            <text class="hero-code">PROJECT</text>
+            <view class="hero-online">
+              <view class="tech-dot"></view>
+              <text class="hero-online-text">DATABASE ONLINE</text>
+            </view>
+          </view>
           <text class="hero-name">{{ project.name }}</text>
           <text class="hero-remark" v-if="project.remark">{{ project.remark }}</text>
           <text class="hero-time">录入于 {{ project.createdAt }} · {{ project.records.length }} 款机型</text>
         </view>
 
-        <view class="record-card" v-for="record in project.records" :key="record.id">
+        <view class="record-card tech-card" v-for="record in project.records" :key="record.id">
           <!-- 机型头部 -->
           <view class="record-head" v-if="record.device">
             <view class="record-thumb" v-if="record.device.image && !record.device.imgFail">
@@ -44,36 +53,50 @@
             </view>
           </view>
 
-          <!-- 手机参数：实时引用手机参数管理 -->
-          <view class="sub-section" v-if="record.device && record.device.groups">
-            <view class="sub-title">
-              <text class="sub-dot"></text>
-              <text class="sub-text">手机参数</text>
-            </view>
-            <view class="param-group" v-for="group in record.device.groups" :key="group.id !== undefined ? group.id : group.title">
-              <view class="param-group-head">
-                <text class="param-group-title">{{ group.title }}</text>
-              </view>
-              <view class="info-row" v-for="item in group.items" :key="item.id !== undefined ? item.id : item.label">
-                <text class="info-label">{{ item.label }}</text>
-                <text class="info-value">{{ item.value }}</text>
-              </view>
-            </view>
-          </view>
-
-          <!-- 测试结果 -->
+          <!-- 测试结果（重点内容，优先展示） -->
           <view class="sub-section">
             <view class="sub-title">
-              <text class="sub-dot result-dot"></text>
+              <view class="sub-dot result-dot"></view>
               <text class="sub-text">测试结果</text>
-              <text class="sub-count">{{ record.params.length }} 项</text>
+              <text class="tech-tag sub-count">{{ record.params.length }} 项</text>
             </view>
             <view class="params-card">
               <view class="info-row" v-for="param in record.params" :key="param.id !== undefined ? param.id : param.label">
                 <text class="info-label">{{ param.label }}</text>
-                <text class="info-value">{{ param.value }}</text>
+                <text class="info-value tech-value">{{ param.value }}</text>
               </view>
               <view class="params-empty" v-if="!record.params.length">暂无测试结果</view>
+            </view>
+          </view>
+
+          <!-- 手机参数：次要内容，默认折叠，点击分组展开 -->
+          <view class="sub-section" v-if="record.device && record.device.groups">
+            <view class="sub-title">
+              <view class="sub-dot"></view>
+              <text class="sub-text">手机参数</text>
+              <text class="sub-hint">点击展开</text>
+            </view>
+            <view
+              class="param-group"
+              v-for="(group, gi) in record.device.groups"
+              :key="group.id !== undefined ? group.id : group.title"
+            >
+              <view
+                class="param-group-head"
+                hover-class="param-group-head-hover"
+                @click="toggleGroup(record, gi)"
+              >
+                <view class="param-group-dot" :class="{ 'param-group-dot-open': isGroupExpanded(record, gi) }"></view>
+                <text class="param-group-title">{{ group.title }}</text>
+                <text class="param-group-count">{{ group.items.length }} 项</text>
+                <text class="param-group-arrow" :class="{ 'param-group-arrow-open': isGroupExpanded(record, gi) }">›</text>
+              </view>
+              <view class="param-group-body" v-if="isGroupExpanded(record, gi)">
+                <view class="info-row" v-for="item in group.items" :key="item.id !== undefined ? item.id : item.label">
+                  <text class="info-label">{{ item.label }}</text>
+                  <text class="info-value tech-value">{{ item.value }}</text>
+                </view>
+              </view>
             </view>
           </view>
         </view>
@@ -98,6 +121,7 @@ export default {
       loading: true,
       errorMsg: '',
       project: null,
+      expandedGroups: {},
     }
   },
   onLoad(options) {
@@ -120,6 +144,13 @@ export default {
         })
     },
     resolveImage,
+    isGroupExpanded(record, gi) {
+      return !!this.expandedGroups[record.id + '-' + gi]
+    },
+    toggleGroup(record, gi) {
+      const key = record.id + '-' + gi
+      this.expandedGroups[key] = !this.expandedGroups[key]
+    },
     goBack() {
       const pages = getCurrentPages()
       if (pages.length > 1) {
@@ -139,12 +170,22 @@ export default {
   box-sizing: border-box;
 }
 
+/* ---------- 头部 ---------- */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(20, 22, 27, 0.85);
-  border-bottom: 1px solid #262b36;
+  background-color: rgba(10, 14, 22, 0.82);
+  border-bottom: 1px solid var(--line);
+}
+.header-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1rpx;
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(77, 166, 255, 0.4), transparent);
+  pointer-events: none;
 }
 .status-bar {
   height: var(--status-bar-height);
@@ -168,22 +209,22 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(31, 36, 46, 0.65);
-  border: 1px solid rgba(92, 179, 255, 0.2);
+  background-color: rgba(18, 26, 42, 0.7);
+  border: 1px solid rgba(77, 166, 255, 0.28);
 }
 .back-btn-hover {
   opacity: 0.7;
 }
 .back-icon {
   font-size: 44rpx;
-  color: #e6e8ee;
+  color: var(--text-1);
   line-height: 1;
   margin-top: -6rpx;
 }
 .header-title {
   font-size: 34rpx;
   font-weight: 600;
-  color: #e6e8ee;
+  color: var(--text-1);
   max-width: 480rpx;
   overflow: hidden;
   white-space: nowrap;
@@ -198,6 +239,7 @@ export default {
   padding: 24rpx 24rpx 60rpx;
 }
 
+/* ---------- 加载 / 错误 ---------- */
 .loading {
   display: flex;
   flex-direction: column;
@@ -207,10 +249,11 @@ export default {
 .spinner {
   width: 56rpx;
   height: 56rpx;
-  border: 6rpx solid #262b36;
-  border-top-color: #5cb3ff;
+  border: 6rpx solid rgba(122, 162, 220, 0.14);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
+  box-shadow: 0 0 18px rgba(77, 166, 255, 0.18);
 }
 @keyframes spin {
   to {
@@ -220,7 +263,7 @@ export default {
 .loading-text {
   margin-top: 24rpx;
   font-size: 26rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
 }
 .error {
   display: flex;
@@ -230,50 +273,79 @@ export default {
 }
 .error-text {
   font-size: 28rpx;
-  color: #ef4444;
+  color: #f48a8a;
 }
 .retry-btn {
   margin-top: 32rpx;
   padding: 14rpx 48rpx;
   border-radius: 999rpx;
-  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
+  background: linear-gradient(135deg, #2f7bff, #35c9ee);
   color: #ffffff;
   font-size: 28rpx;
+  box-shadow: 0 0 20px rgba(53, 150, 255, 0.3);
 }
 .retry-btn-hover {
   opacity: 0.8;
 }
 
+/* ---------- 项目 hero ---------- */
 .hero-card {
-  background: linear-gradient(135deg, rgba(47, 139, 255, 0.3), rgba(26, 29, 36, 0.55));
-  border: 1px solid rgba(92, 179, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(45, 120, 255, 0.2), rgba(13, 19, 32, 0.72));
+  border: 1px solid rgba(77, 166, 255, 0.26);
   border-radius: 20rpx;
-  padding: 36rpx 32rpx;
+  padding: 32rpx 32rpx 36rpx;
   margin-bottom: 24rpx;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 0 30px rgba(45, 120, 255, 0.08);
+}
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.hero-code {
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, 'Courier New', monospace;
+  font-size: 20rpx;
+  color: var(--accent);
+  letter-spacing: 3rpx;
+}
+.hero-online {
+  display: flex;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  border-radius: 999rpx;
+  background-color: rgba(62, 207, 158, 0.07);
+  border: 1px solid rgba(62, 207, 158, 0.22);
+}
+.hero-online-text {
+  font-size: 16rpx;
+  color: #8fd8bd;
+  letter-spacing: 2rpx;
+  margin-left: 8rpx;
 }
 .hero-name {
   font-size: 40rpx;
   font-weight: 700;
-  color: #e6e8ee;
+  color: var(--text-1);
 }
 .hero-remark {
   font-size: 26rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
   margin-top: 12rpx;
+  line-height: 1.5;
 }
 .hero-time {
   font-size: 22rpx;
-  color: #7c8598;
+  color: var(--text-3);
   margin-top: 12rpx;
 }
 
-/* 机型记录卡片 */
+/* ---------- 机型记录卡片 ---------- */
 .record-card {
-  background-color: rgba(24, 27, 34, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20rpx;
   padding: 24rpx 28rpx 8rpx;
   margin-bottom: 24rpx;
 }
@@ -281,14 +353,15 @@ export default {
   display: flex;
   align-items: center;
   padding-bottom: 16rpx;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--line);
   margin-bottom: 8rpx;
 }
 .record-thumb {
-  width: 180rpx;
-  height: 180rpx;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 28rpx;
-  background-color: rgba(31, 36, 46, 0.65);
+  background: linear-gradient(160deg, rgba(30, 42, 64, 0.7), rgba(15, 22, 36, 0.8));
+  border: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -301,23 +374,25 @@ export default {
   height: 100%;
 }
 .record-thumb-icon {
-  font-size: 88rpx;
+  font-size: 80rpx;
 }
 .record-head-main {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 .record-device {
   font-size: 32rpx;
   font-weight: 700;
-  color: #e6e8ee;
+  color: var(--text-1);
 }
 .record-time {
   font-size: 20rpx;
-  color: #7c8598;
+  color: var(--text-3);
   margin-top: 6rpx;
 }
 
+/* ---------- 分区 ---------- */
 .sub-section {
   margin-bottom: 16rpx;
 }
@@ -330,43 +405,90 @@ export default {
   width: 10rpx;
   height: 10rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3d7ef5, #5cb3ff);
+  background: linear-gradient(135deg, #4da6ff, #35c9ee);
+  box-shadow: 0 0 6px rgba(77, 166, 255, 0.7);
   margin-right: 10rpx;
 }
 .result-dot {
-  background-color: #34d399;
+  background: linear-gradient(135deg, #3ecf9e, #35c9ee);
+  box-shadow: 0 0 6px rgba(62, 207, 158, 0.7);
 }
 .sub-text {
   font-size: 26rpx;
   font-weight: 600;
-  color: #c3c9d6;
+  color: var(--text-1);
 }
 .sub-count {
-  font-size: 22rpx;
-  color: #7c8598;
   margin-left: auto;
 }
+.sub-hint {
+  font-size: 20rpx;
+  color: var(--text-3);
+  margin-left: auto;
+  letter-spacing: 1rpx;
+}
 
+/* ---------- 参数组 / 参数卡 ---------- */
 .param-group {
-  background-color: rgba(31, 36, 46, 0.65);
-  border: 1px solid rgba(92, 179, 255, 0.2);
+  background: linear-gradient(160deg, rgba(24, 34, 52, 0.55), rgba(15, 22, 36, 0.6));
+  border: 1px solid rgba(77, 166, 255, 0.16);
   border-radius: 16rpx;
-  padding: 4rpx 24rpx;
+  padding: 0 24rpx;
   margin-bottom: 16rpx;
+  overflow: hidden;
 }
 .param-group-head {
-  padding: 14rpx 0 8rpx;
-  border-bottom: 1px solid #2c3342;
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+}
+.param-group-head-hover {
+  opacity: 0.75;
+}
+.param-group-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: rgba(77, 166, 255, 0.45);
+  margin-right: 12rpx;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.param-group-dot-open {
+  background-color: var(--accent);
+  box-shadow: 0 0 6px rgba(77, 166, 255, 0.8);
 }
 .param-group-title {
   font-size: 26rpx;
   font-weight: 600;
-  color: #5cb3ff;
+  color: var(--text-1);
+  flex: 1;
+  min-width: 0;
+}
+.param-group-count {
+  font-size: 20rpx;
+  color: var(--text-3);
+  margin-right: 10rpx;
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, 'Courier New', monospace;
+}
+.param-group-arrow {
+  font-size: 30rpx;
+  color: var(--text-2);
+  line-height: 1;
+  margin-top: -2rpx;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.param-group-arrow-open {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+.param-group-body {
+  border-top: 1px solid rgba(122, 162, 220, 0.1);
 }
 
 .params-card {
-  background-color: rgba(31, 36, 46, 0.65);
-  border: 1px solid rgba(92, 179, 255, 0.2);
+  background: linear-gradient(160deg, rgba(24, 34, 52, 0.55), rgba(15, 22, 36, 0.6));
+  border: 1px solid rgba(77, 166, 255, 0.16);
   border-radius: 16rpx;
   padding: 4rpx 24rpx;
 }
@@ -375,28 +497,28 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 20rpx 0;
-  border-bottom: 1px solid #2c3342;
+  border-bottom: 1px solid rgba(122, 162, 220, 0.07);
 }
 .info-row:last-child {
   border-bottom: none;
 }
 .info-label {
   font-size: 26rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
   margin-right: 24rpx;
   flex-shrink: 0;
 }
 .info-value {
   font-size: 28rpx;
   font-weight: 600;
-  color: #e6e8ee;
+  color: var(--text-1);
   text-align: right;
   word-break: break-all;
 }
 .params-empty {
   padding: 28rpx 0;
   font-size: 26rpx;
-  color: #7c8598;
+  color: var(--text-3);
   text-align: center;
 }
 
@@ -407,12 +529,12 @@ export default {
 }
 .empty-text {
   font-size: 26rpx;
-  color: #7c8598;
+  color: var(--text-3);
 }
 .list-end {
   text-align: center;
   font-size: 22rpx;
-  color: #4b5563;
+  color: var(--text-3);
   padding: 24rpx 0;
 }
 
@@ -426,6 +548,9 @@ export default {
     position: static;
     background-color: transparent;
     border-bottom: none;
+  }
+  .header-line {
+    display: none;
   }
   .header-bar {
     max-width: 1200px;

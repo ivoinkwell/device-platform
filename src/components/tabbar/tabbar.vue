@@ -5,6 +5,7 @@
     <!-- #endif -->
     <view
       class="tabbar-item"
+      :class="{ 'tabbar-item-active': item.path === current }"
       v-for="item in tabList"
       :key="item.path"
       hover-class="tabbar-item-hover"
@@ -69,9 +70,9 @@ export default {
   right: 0;
   bottom: 0;
   display: flex;
-  background-color: rgba(20, 22, 27, 0.85);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35);
+  background-color: rgba(10, 14, 22, 0.85);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4);
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
   z-index: 999;
@@ -88,6 +89,7 @@ export default {
 }
 
 .tabbar-item {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -97,7 +99,21 @@ export default {
 }
 
 .tabbar-item-hover {
-  background-color: rgba(24, 27, 34, 0.78);
+  background-color: rgba(18, 26, 42, 0.6);
+}
+
+/* 激活指示条 */
+.tabbar-item-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56rpx;
+  height: 4rpx;
+  border-radius: 0 0 4rpx 4rpx;
+  background: linear-gradient(90deg, rgba(77, 166, 255, 0.3), #4da6ff, rgba(53, 201, 238, 0.3));
+  box-shadow: 0 0 10px rgba(77, 166, 255, 0.45);
 }
 
 .tabbar-icon {
@@ -107,12 +123,12 @@ export default {
 
 .tabbar-text {
   font-size: 22rpx;
-  color: #9aa3b2;
+  color: var(--text-2);
   margin-top: 8rpx;
 }
 
 .tabbar-text-active {
-  color: #5cb3ff;
+  color: var(--accent);
 }
 
 /* 管理入口：仅桌面端 H5 显示 */
@@ -133,8 +149,8 @@ export default {
     align-items: center;
     padding-bottom: 0;
     border-top: none;
-    border-bottom: 1px solid #262b36;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 
   .tabbar-desktop-only {
@@ -148,12 +164,16 @@ export default {
     padding: 0 32px;
     font-size: 18px;
     font-weight: 700;
-    color: #e6e8ee;
     letter-spacing: 1px;
     margin-right: auto;
+    color: var(--accent);
+    background: linear-gradient(90deg, #8cc3ff, #35c9ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-.tabbar-item {
+  .tabbar-item {
     flex: 0 0 auto;
     flex-direction: row;
     height: 100%;
@@ -162,7 +182,16 @@ export default {
   }
 
   .tabbar-item-hover {
-    background-color: rgba(24, 27, 34, 0.78);
+    background-color: rgba(18, 26, 42, 0.6);
+  }
+
+  .tabbar-item-active::before {
+    top: auto;
+    bottom: 0;
+    width: 64rpx;
+    height: 4rpx;
+    border-radius: 4rpx 4rpx 0 0;
+    background: linear-gradient(90deg, rgba(77, 166, 255, 0.3), #4da6ff, rgba(53, 201, 238, 0.3));
   }
 
   .tabbar-icon {
