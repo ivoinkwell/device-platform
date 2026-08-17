@@ -7,6 +7,7 @@
     <text class="nav-link nav-util" @click="doImport">导入数据</text>
     <text class="nav-user" v-if="username">👤 {{ username }}</text>
     <text class="nav-link nav-util" @click="openPwd">修改密码</text>
+    <text class="nav-link nav-front" @click="goFront" title="按 V 键快速返回前台">👁 查看前台</text>
     <text class="nav-link nav-back" @click="doLogout">退出登录</text>
   </view>
 
@@ -41,10 +42,31 @@ export default {
       pwdForm: { oldPassword: '', newPassword: '', confirm: '' },
     }
   },
+  // #ifdef H5
+  mounted() {
+    document.addEventListener('keydown', this.onKeyDown)
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown)
+  },
+  // #endif
   methods: {
     go(url, key) {
       if (key === this.current) return
       uni.redirectTo({ url })
+    },
+    // 按 V 键快速回到前台预览（输入框内不触发）
+    onKeyDown(e) {
+      const el = e.target
+      const tag = (el && el.tagName) || ''
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (el && el.isContentEditable)) return
+      if (e.key === 'v' || e.key === 'V') {
+        e.preventDefault()
+        this.goFront()
+      }
+    },
+    goFront() {
+      uni.reLaunch({ url: '/pages/index/index' })
     },
     doExport() {
       uni.showLoading({ title: '导出中...' })
@@ -169,5 +191,12 @@ export default {
 .nav-back {
   color: #ef4444;
   border: 1px solid #ef4444;
+}
+.nav-front {
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+}
+.nav-front:hover {
+  background-color: rgba(74, 222, 128, 0.12);
 }
 </style>
