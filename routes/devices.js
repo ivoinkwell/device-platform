@@ -8,11 +8,17 @@ function deviceToJson(row) {
     (sum, g) => sum + db.prepare('SELECT COUNT(*) AS c FROM device_items WHERE group_id = ?').get(g.id).c,
     0
   )
+  // 设备未单独上传缩略图时，回退使用品牌 Logo
+  let image = row.image || ''
+  if (!image) {
+    const brand = db.prepare('SELECT image FROM brands WHERE name = ?').get(row.brand)
+    if (brand && brand.image) image = brand.image
+  }
   return {
     id: row.id,
     brand: row.brand,
     model: row.model,
-    image: row.image || '',
+    image,
     updatedAt: row.updated_at,
     groupCount: groups.length,
     itemCount,

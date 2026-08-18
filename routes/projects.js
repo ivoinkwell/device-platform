@@ -6,11 +6,17 @@ function deviceInfo(deviceId) {
   const d = db.prepare('SELECT * FROM devices WHERE id = ?').get(deviceId)
   if (!d) return null
   const groups = db.prepare('SELECT * FROM device_groups WHERE device_id = ? ORDER BY sort ASC, id ASC').all(d.id)
+  // 设备未单独上传缩略图时，回退使用品牌 Logo
+  let image = d.image || ''
+  if (!image) {
+    const brand = db.prepare('SELECT image FROM brands WHERE name = ?').get(d.brand)
+    if (brand && brand.image) image = brand.image
+  }
   return {
     id: d.id,
     brand: d.brand,
     model: d.model,
-    image: d.image || '',
+    image,
     updatedAt: d.updated_at,
     groups: groups.map((g) => ({
       id: g.id,
