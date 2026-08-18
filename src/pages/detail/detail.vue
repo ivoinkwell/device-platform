@@ -41,8 +41,8 @@
         <view class="record-card tech-card" v-for="record in project.records" :key="record.id">
           <!-- 机型头部 -->
           <view class="record-head" v-if="record.device">
-            <view class="record-thumb" v-if="record.device.image && !record.device.imgFail">
-              <image class="record-img" :src="resolveImage(record.device.image)" mode="aspectFit" @error="record.device.imgFail = true"></image>
+            <view class="record-thumb" v-if="(record.device.image || record.device.logo) && !record.device.imgFail">
+              <image class="record-img" :src="resolveImage(record.device.image || record.device.logo)" mode="aspectFit" @error="record.device.imgFail = true"></image>
             </view>
             <view class="record-thumb" v-else>
               <text class="record-thumb-icon">📱</text>
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { getProjectDetail, resolveImage } from '@/api'
+import { getProjectDetail, getBrands, resolveImage } from '@/api'
 
 export default {
   data() {
@@ -132,8 +132,16 @@ export default {
     loadData() {
       this.loading = true
       this.errorMsg = ''
-      getProjectDetail(this.id)
-        .then((data) => {
+      Promise.all([getProjectDetail(this.id), getBrands()])
+        .then(([data, brands]) => {
+          // 设备未单独上传缩略图时，回退使用品牌 Logo
+          const logoMap = {}
+          ;(brands || []).forEach((b) => {
+            logoMap[b.name] = b.image || ''
+          })
+          ;(data.records || []).forEach((r) => {
+            if (r.device) r.device.logo = logoMap[r.device.brand] || ''
+          })
           this.project = data
         })
         .catch((err) => {
