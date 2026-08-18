@@ -33,8 +33,8 @@
           </view>
           <view class="tr" v-for="device in list" :key="device.id">
             <view class="td w-brand">
-              <view class="brand-cell" v-if="device.image && !device.imgFail">
-                <image class="brand-img" :src="resolveImage(device.image)" mode="aspectFit" @error="device.imgFail = true"></image>
+              <view class="brand-cell" v-if="(device.image || device.logo) && !device.imgFail">
+                <image class="brand-img" :src="resolveImage(device.image || device.logo)" mode="aspectFit" @error="device.imgFail = true"></image>
               </view>
               <view class="brand-cell" v-else>
                 <text class="brand-fallback">📱</text>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { adminGetDevices, adminCreateDevice, adminUpdateDevice, adminDeleteDevice, requireLogin } from '@/api/admin'
+import { adminGetDevices, adminCreateDevice, adminUpdateDevice, adminDeleteDevice, adminGetBrands, requireLogin } from '@/api/admin'
 import { resolveImage } from '@/api'
 
 export default {
@@ -93,9 +93,14 @@ export default {
     load() {
       this.loading = true
       this.errorMsg = ''
-      adminGetDevices()
-        .then((list) => {
-          this.list = list
+      Promise.all([adminGetDevices(), adminGetBrands()])
+        .then(([list, brandImages]) => {
+          const logoMap = {}
+          ;(brandImages || []).forEach((b) => {
+            logoMap[b.name] = b.image || ''
+          })
+          // 设备未单独上传缩略图时，回退使用品牌 Logo
+          this.list = list.map((d) => ({ ...d, logo: logoMap[d.brand] || '' }))
         })
         .catch((err) => {
           this.errorMsg = err.message || '加载失败'

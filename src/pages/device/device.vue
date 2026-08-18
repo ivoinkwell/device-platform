@@ -79,8 +79,8 @@
           hover-class="device-card-hover"
           @click="openDevice(device)"
         >
-          <view class="device-avatar" v-if="device.image && !device.imgFail">
-            <image class="device-img" :src="resolveImage(device.image)" mode="aspectFit" @error="device.imgFail = true"></image>
+          <view class="device-avatar" v-if="(device.image || device.logo) && !device.imgFail">
+            <image class="device-img" :src="resolveImage(device.image || device.logo)" mode="aspectFit" @error="device.imgFail = true"></image>
           </view>
           <view class="device-avatar" v-else>
             <text class="device-avatar-icon">📱</text>
@@ -117,8 +117,8 @@
         <template v-else-if="device">
           <view class="hero-card">
             <view class="scanline"></view>
-            <view class="hero-avatar" v-if="device.image && !device.imgFail">
-              <image class="hero-img" :src="resolveImage(device.image)" mode="aspectFit" @error="device.imgFail = true"></image>
+            <view class="hero-avatar" v-if="(device.image || device.logo) && !device.imgFail">
+              <image class="hero-img" :src="resolveImage(device.image || device.logo)" mode="aspectFit" @error="device.imgFail = true"></image>
             </view>
             <view class="hero-avatar" v-else>
               <text class="hero-avatar-icon">📱</text>
@@ -211,7 +211,9 @@ export default {
     },
     brandDevices() {
       const group = this.brandGroups.find((g) => g.brand === this.currentBrand)
-      return group ? group.devices : []
+      if (!group) return []
+      // 设备未单独上传缩略图时，回退使用品牌 Logo
+      return group.devices.map((d) => ({ ...d, logo: this.brandImages[d.brand] || '' }))
     },
     displayGroups() {
       if (!this.device || !this.device.groups) return []
@@ -266,6 +268,8 @@ export default {
       this.errorMsg = ''
       getDeviceInfo(device.id)
         .then((data) => {
+          // 设备未单独上传缩略图时，回退使用品牌 Logo
+          data.logo = this.brandImages[this.currentBrand] || ''
           this.device = data
         })
         .catch((err) => {
